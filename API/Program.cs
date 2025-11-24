@@ -1,4 +1,5 @@
 using API.Data;
+using API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,13 +12,14 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 });
 
 builder.Services.AddCors();
-
+builder.Services.AddTransient<ExceptionMiddleware>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 /*builder.Services.AddOpenApi();*/
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
 /*if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

@@ -31,7 +31,6 @@ export default function ProductCard({product}:Props) {
             </Typography>
             <Typography
                 variant="h6"
-                sx={{color:'secondary.main'}}
             >
                 ₱{(product.price / 100).toFixed(2)}
             </Typography>
