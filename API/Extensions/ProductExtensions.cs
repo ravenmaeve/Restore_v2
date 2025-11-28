@@ -1,5 +1,7 @@
 using System;
+using API.DTOs;
 using API.Entities;
+using API.Entities.OrderAggregate;
 
 namespace API.Extensions;
 
@@ -50,4 +52,6 @@ public static class ProductExtensions
 
         return query;
     }
+
+   
 }
