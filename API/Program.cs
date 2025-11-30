@@ -11,7 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    // opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddCors();
@@ -31,6 +32,8 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 /*if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -49,7 +52,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>(); // api/login
-
-DbInitializer.InitDb(app);
+app.MapFallbackToController("Index","Fallback");
+await DbInitializer.InitDb(app);
 
 app.Run();
